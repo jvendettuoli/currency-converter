@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forex Converter</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/37f4ac9872.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="main-container" class="container-fluid">
+    <div class="container text-center my-3">
+        <h1 class="display-3">Currency Converter</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-5 titled rounded mx-4">
+                <h2 class="text-center my-3">Set Conversion</h2>
+                <form class="form-group" action="/convert" id="input-form">
+                <div class="row input">
+
+                        <label class="col-form-label col-form-label-lg" for="convert-from-select">Convert from:</label>
+                        <select class="custom-select" name="from-currency" id="convert-from-select" required>
+                            <option disabled selected value>Select a Currency...</option>
+                            {% for currency in currencies %}
+                                {% for code, country in currency.items() %}
+                                <option value="{{code}}">{{code}} - {{country}}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="row input">
+                        <label class="col-form-label col-form-label-lg" for="convert-to-select">Convert to:</label>
+                        <select class="custom-select" name="to-currency" id="convert-to-select" required>
+                            <option disabled selected value>Select a Currency...</option>
+                            
+                            {% for currency in currencies %}
+                                {% for code, country in currency.items() %}
+                                <option value="{{code}}">{{code}} - {{country}}</option>
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="row input">
+                    <label class="col-form-label col-form-label-lg" for="amount-input">Amount:</label>
+
+                      <div class="input-group">
+                        <input class="form-control" name="amount" step="0.01" title="Please enter a number of 0 or greater." min="0" type="number" id="amount-input" required>
+                        <div class="input-group-append">
+                            <input class="btn btn-light" type="submit" value="Convert">
+                        </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+  
+            <div class="col-12 col-md-5 rounded mx-4">
+                <div class="row titled text-center rounded-top">
+           
+                <h2 class="text-center my-3 mx-auto">Converted Values</h2>
+                {% if prev_conversion %}
+                </div>
+                <div class="row  my-auto conversion-text rounded-bottom">
+                    <div class="col-5">
+                        <div class="row mt-3">
+                            <p class="text-center font-weight-bold mx-auto">{{prev_conversion.from_curr}}</p>
+                        </div>
+                        <div class="row">
+                            <p class="text-center font-weight-bold ml-auto">{{prev_conversion.in_symbol}}&nbsp; </p>
+                            <p class="text-center font-weight-bold mr-auto">{{prev_conversion.amount_in}}</p>
+                        </div>
+                    </div>
+                    <div id="arrows-container"class=" d-flex justify-content-center align-items-center col-2 align-middle"><i class="fas fa-exchange-alt fa-2x"></i></div>
+                    <div class="col-5">
+                        <div class="row mt-3">
+                            <p class="text-center font-weight-bold mx-auto">{{prev_conversion.to_curr}}</p>
+                        </div>
+                        <div class="row">
+                            <p class="text-center font-weight-bold ml-auto">{{prev_conversion.converted_symbol}}&nbsp; </p>
+                            <p class="text-center font-weight-bold mr-auto">{{prev_conversion.converted_amount}}</p>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <p id="no-conversion" class="text-center mx-auto">No conversion has been requested this session.</p>
+                {% endif %}
+                <!-- <div class="row"></div>
+                <div class="row"></div> -->
+            </div>
+        </div>
+        </div>
+ 
+    </div>
+
+
+    </div>
+    <footer class="container-fluid text-center align-middle pt-5"><p class="p-0">This converter works off <a class="text-success" href="https://forex-python.readthedocs.io/en/latest/index.html">forex-python</a>  and <a class="text-success" href="https://ratesapi.io/">https://ratesapi.io</a>. The rates are updated daily 3PM CET.</p></footer>
+</body>
+</html>
