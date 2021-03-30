@@ -36,7 +36,7 @@ prompt-toolkit==1.0.15
 pycodestyle==2.6.0
 pycrypto==2.6.1
 pygame===1.9.1release
-Pygments==2.2.0
+Pygments==2.7.4
 pygobject==3.26.1
 pyliblzma==0.5.3
 python-apt==1.6.5+ubuntu0.3
